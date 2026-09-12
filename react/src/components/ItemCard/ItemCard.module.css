@@ -1,0 +1,84 @@
+.card {
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 8%);
+  border-radius: 0.75rem;
+  background-color: rgb(24 24 24 / 88%);
+  box-shadow: 0 0.75rem 1.5rem rgb(0 0 0 / 16%);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.imageWrapper {
+  overflow: hidden;
+  aspect-ratio: 1;
+  background-color: #1a1a1a;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 180ms ease;
+}
+
+.content {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.85rem;
+}
+
+.metadata,
+.title,
+.description {
+  margin: 0;
+}
+
+.metadata {
+  overflow: hidden;
+  color: #9a9a9a;
+  font-size: 0.7rem;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  line-height: 1.3;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.title {
+  overflow: hidden;
+  color: #f4f4f5;
+  font-size: 0.95rem;
+  font-weight: 650;
+  line-height: 1.3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.description {
+  display: -webkit-box;
+  overflow: hidden;
+  color: #b8b8b8;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.card:hover {
+  box-shadow: 0 1rem 2rem rgb(0 0 0 / 24%);
+  transform: translateY(-0.2rem);
+}
+
+.card:hover .image {
+  transform: scale(1.035);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .image {
+    transition: none;
+  }
+}
