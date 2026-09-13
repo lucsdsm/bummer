@@ -25,7 +25,11 @@ export function ItemCard({ item }: ItemCardProps) {
 
       <div className={styles.content}>
         <p className={styles.metadata}>
-          {item.game} · {item.category}
+          {item.category}
+        </p>
+
+        <p className={styles.metadata}>
+          {item.game}
         </p>
 
         <h2 className={styles.title}>{item.name}</h2>

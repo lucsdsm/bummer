@@ -5,13 +5,16 @@ import type { Item } from "../../types/item"
 import { ItemCard } from "../ItemCard/ItemCard"
 import styles from "./ItemList.module.css"
 
+interface ItemListProps {
+  searchTerm: string
+}
+
 /**
- * Busca e exibe os itens publicados   no catálogo.
+ * Busca e exibe itens publicados no catálogo.
  *
- * Estados de carregamento, erro e catálogo vazio são tratados antes
- * da renderização da grade.
+ * A lista é atualizada quando o termo de pesquisa é alterado.
  */
-export function ItemList() {
+export function ItemList({ searchTerm }: ItemListProps) {
   const [items, setItems] = useState<Item[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -21,7 +24,14 @@ export function ItemList() {
 
     async function loadItems() {
       try {
-        const data = await getItems(controller.signal)
+        setIsLoading(true)
+        setError(null)
+
+        const data = await getItems({
+          search: searchTerm,
+          signal: controller.signal,
+        })
+
         setItems(data)
       } catch (error) {
         if (error instanceof Error && error.name === "AbortError") {
@@ -37,7 +47,7 @@ export function ItemList() {
     void loadItems()
 
     return () => controller.abort()
-  }, [])
+  }, [searchTerm])
 
   if (isLoading) {
     return (
@@ -58,7 +68,7 @@ export function ItemList() {
   if (items.length === 0) {
     return (
       <p className={styles.feedback}>
-        Nenhum item publicado ainda.
+        Nenhum item encontrado.
       </p>
     )
   }

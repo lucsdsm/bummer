@@ -1,7 +1,7 @@
 .card {
   overflow: hidden;
-  border: 1px solid rgb(255 255 255 / 8%);
-  border-radius: 0.75rem;
+  /* border: 1px solid rgb(255 255 255 / 8%); */
+  border-radius: 0.25rem;
   background-color: rgb(24 24 24 / 88%);
   box-shadow: 0 0.75rem 1.5rem rgb(0 0 0 / 16%);
   transition:
@@ -44,6 +44,7 @@
   line-height: 1.3;
   text-overflow: ellipsis;
   text-transform: uppercase;
+  font-style: italic; 
   white-space: nowrap;
 }
 
