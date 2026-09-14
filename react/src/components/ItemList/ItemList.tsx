@@ -75,10 +75,14 @@ export function ItemList({ searchTerm }: ItemListProps) {
 
   return (
     <section className={styles.section} aria-label="Lista de itens">
-      <div className={styles.grid}>
-        {items.map((item) => (
-          <ItemCard key={item.id} item={item} />
-        ))}
+      <div className={styles.catalog}>
+        <h2 className={styles.title}>Itens recentes</h2>
+
+        <div className={styles.grid}>
+          {items.map((item) => (
+            <ItemCard key={item.id} item={item} />
+          ))}
+        </div>
       </div>
     </section>
   )

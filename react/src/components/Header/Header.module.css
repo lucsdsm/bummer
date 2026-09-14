@@ -1,56 +1,63 @@
 .header {
   position: relative;
   z-index: 10;
-  /* border-bottom: 1px solid rgb(255 255 255 / 8%);
-  background: rgb(16 16 16 / 82%); */
+  background: rgb(16 16 16 / 78%);
   backdrop-filter: blur(1rem);
 }
 
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: min(100% - 2rem, 1200px);
+.catalogContainer {
+  width: 320px;
+  max-width: calc(100% - (var(--page-gutter) * 2));
   margin: 0 auto;
-  padding: 1.5rem 0 1rem;
+}
+
+.topbar {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.85rem;
+  min-height: 5.25rem;
 }
 
 .logo {
   display: inline-flex;
   align-items: center;
-  gap: 0.65rem;
+  min-width: 0;
+  gap: 0.6rem;
   color: inherit;
   text-decoration: none;
 }
 
 .logoImage {
   display: block;
-  width: 5rem;
-  height: 5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
   object-fit: contain;
-  border-radius: 360px;
-  margin-bottom: 0.5    rem;
 }
 
 .logoName {
+  overflow: hidden;
   color: #f4f4f5;
-  font-size: 2rem;
+  font-size: 1.2rem;
   font-weight: 750;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.045em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.navigation {
-  display: flex;
-  justify-content: center;
-  gap: 0.35rem;
-  margin-top: 1rem;
-}
+.search {
+  width: 50%;
+  min-width: 0;
+  justify-self: center;
+} 
 
 .socialNavigation {
   display: flex;
-  justify-content: center;
-  gap: 0.35rem;
-  margin-top: 0.7rem;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.2rem;
 }
 
 .socialLink {
@@ -59,8 +66,8 @@
   height: 2rem;
   place-items: center;
   border: 1px solid transparent;
-  border-radius: 0.5rem;
-  color: #858585;
+  border-radius: 0.45rem;
+  color: #8d8d8d;
   text-decoration: none;
   transition:
     border-color 160ms ease,
@@ -69,19 +76,42 @@
 }
 
 .socialLink:hover {
-  border-color: rgb(255 255 255 / 10%);
-  background: rgb(255 255 255 / 6%);
-  color: #3aa01b;
+  border-color: rgb(58 160 27 / 35%);
+  background: rgb(58 160 27 / 10%);
+  color: #5dc83b;
 }
 
-.socialLink:focus-visible {
-  outline: 2px solid #3aa01b;
+.socialLink:focus-visible,
+.logo:focus-visible,
+.menuButton:focus-visible,
+.dropdownItem:focus-visible {
+  outline: 2px solid #5dc83b;
   outline-offset: 3px;
 }
 
 .socialLink svg {
-  width: 1rem;
-  height: 1rem;
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 3rem;
+  border-bottom: 1px solid rgb(255 255 255 / 6%);
+}
+
+.filterLabel {
+  margin-right: 0.15rem;
+  color: #777;
+  font-size: 0.8rem;
+  font-weight: 750;
+  letter-spacing: -0.04em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  font-style: italic;
 }
 
 .menu {
@@ -89,19 +119,35 @@
 }
 
 .menuButton {
-  min-height: 2.25rem;
-  padding: 0.45rem 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.4rem 0.65rem;
   border: 1px solid transparent;
-  border-radius: 0.5rem;
+  border-radius: 0.45rem;
   background: transparent;
   color: #bdbdbd;
   cursor: pointer;
   font-size: 0.8rem;
-  font-weight: 650;
+  font-weight: 750;
+  letter-spacing: -0.04em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  font-style: italic;
   transition:
     background-color 160ms ease,
     border-color 160ms ease,
     color 160ms ease;
+}
+
+.menuButton::after {
+  width: 0.35rem;
+  height: 0.35rem;
+  margin-left: 0.45rem;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  content: "";
+  transform: translateY(-0.1rem) rotate(45deg);
 }
 
 .menuButton:hover,
@@ -111,39 +157,38 @@
   color: #f4f4f5;
 }
 
-.menuButton:focus-visible,
-.dropdownItem:focus-visible,
-.logo:focus-visible {
-  outline: 2px solid #3aa01b;
-  outline-offset: 3px;
+.menuButton[aria-expanded="true"]::after {
+  transform: translateY(0.1rem) rotate(225deg);
 }
 
 .dropdown {
   position: absolute;
-  top: calc(100% + 0.5rem);
-  left: 50%;
+  top: calc(100% + 0.55rem);
+  left: 0;
   display: grid;
   width: max-content;
-  min-width: 11rem;
+  min-width: 12rem;
   max-width: min(18rem, calc(100vw - 2rem));
   max-height: 18rem;
   overflow-y: auto;
-  transform: translateX(-50%);
   border: 1px solid rgb(255 255 255 / 10%);
   border-radius: 0.65rem;
   background: #1a1a1a;
-  box-shadow: 0 1rem 2rem rgb(0 0 0 / 30%);
+  box-shadow: 0 1rem 2rem rgb(0 0 0 / 34%);
 }
 
 .dropdownItem {
   padding: 0.7rem 0.85rem;
   border: 0;
-  border-bottom: 1px solid rgb(255 255 255 / 6%);
   background: transparent;
-  color: #d3d3d3;
+  color: #d3d3d3ad;
   cursor: pointer;
-  font-size: 0.82rem;
-  line-height: 1.35;
+  font-size: 0.8rem;
+  font-weight: 750;
+  letter-spacing: -0.04em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  font-style: italic; 
   text-align: left;
 }
 
@@ -152,7 +197,7 @@
 }
 
 .dropdownItem:hover {
-  background: rgba(59, 246, 68, 0.1);
+  background: rgb(58 160 27 / 12%);
   color: #ffffff;
 }
 
@@ -170,7 +215,97 @@
   white-space: normal;
 }
 
+@media (min-width: 680px) {
+  .catalogContainer {
+    width: 644px;
+  }
+
+  .logoImage {
+    width: 2.65rem;
+    height: 2.65rem;
+  }
+
+  .logoName {
+    font-size: 1.3rem;
+  }
+
+  .socialLink {
+    width: 2.15rem;
+    height: 2.15rem;
+  }
+}
+
+@media (min-width: 1004px) {
+  .catalogContainer {
+    width: 968px;
+  }
+
+  .topbar {
+    gap: 1rem;
+  }
+
+  .logoImage {
+    width: 2.8rem;
+    height: 2.8rem;
+  }
+
+  .logoName {
+    font-size: 1.4rem;
+  }
+
+  .socialNavigation {
+    gap: 0.25rem;
+  }
+
+  .socialLink {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+}
+
+@media (max-width: 679px) {
+  .topbar {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "logo social"
+      "search search";
+    gap: 0.6rem;
+    padding: 0.85rem 0;
+  }
+
+  .logo {
+    grid-area: logo;
+  }
+
+  .search {
+    grid-area: search;
+  }
+
+  .socialNavigation {
+    grid-area: social;
+  }
+
+  .navigation {
+    gap: 0.25rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .navigation::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filterLabel {
+    display: none;
+  }
+
+  .menuButton {
+    padding: 0.4rem 0.6rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .socialLink,
   .menuButton {
     transition: none;
   }

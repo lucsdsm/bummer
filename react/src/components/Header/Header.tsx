@@ -1,16 +1,21 @@
 import { useEffect, useRef, useState } from "react"
-
-import { getCategories, getGames } from "../../services/api"
-import type { CatalogOption } from "../../types/catalog"
-import styles from "./Header.module.css"
-
 import {
   SiGithub,
   SiInstagram,
   SiYoutube,
 } from "react-icons/si"
 
+import { SearchBar } from "../SearchBar/SearchBar"
+import { getCategories, getGames } from "../../services/api"
+import type { CatalogOption } from "../../types/catalog"
+import styles from "./Header.module.css"
+
 type MenuName = "categories" | "games" | null
+
+interface HeaderProps {
+  searchTerm: string
+  onSearchChange: (value: string) => void
+}
 
 interface HeaderMenuProps {
   label: string
@@ -22,10 +27,7 @@ interface HeaderMenuProps {
 }
 
 /**
- * Exibe um menu suspenso de leitura do catálogo.
- *
- * Os itens listados não possuem navegação nesta etapa; eles apenas refletem
- * os jogos e categorias que foram cadastrados no Django Admin.
+ * Exibe um dropdown com opções cadastradas no catálogo.
  */
 function HeaderMenu({
   label,
@@ -49,7 +51,9 @@ function HeaderMenu({
       {isOpen && (
         <div className={styles.dropdown} role="menu">
           {isLoading && (
-            <p className={styles.dropdownFeedback}>Carregando...</p>
+            <p className={styles.dropdownFeedback}>
+              Carregando...
+            </p>
           )}
 
           {error && (
@@ -82,12 +86,15 @@ function HeaderMenu({
 }
 
 /**
- * Cabeçalho principal da aplicação.
+ * Cabeçalho principal do Bummer.
  *
- * Busca jogos e categorias uma vez ao montar e exibe cada coleção em um
- * menu suspenso, sem alterar a página ao selecionar uma opção.
+ * O termo de busca pertence ao App porque é compartilhado entre SearchBar
+ * e ItemList. O Header apenas recebe e atualiza esse valor por props.
  */
-export function Header() {
+export function Header({
+  searchTerm,
+  onSearchChange,
+}: HeaderProps) {
   const [categories, setCategories] = useState<CatalogOption[]>([])
   const [games, setGames] = useState<CatalogOption[]>([])
   const [openMenu, setOpenMenu] = useState<MenuName>(null)
@@ -156,49 +163,74 @@ export function Header() {
 
   return (
     <header className={styles.header} ref={headerRef}>
-      <div className={styles.content}>
-        <a className={styles.logo} href="/" aria-label="Bummer, página inicial">
+      <div className={styles.catalogContainer}>
+        <div className={styles.topbar}>
+          <a
+            className={styles.logo}
+            href="/"
+            aria-label="Bummer, página inicial"
+          >
             <img
-                src="/branding/bummer.webp"
-                alt=""
-                className={styles.logoImage}
+              src="/branding/bummer.webp"
+              alt=""
+              className={styles.logoImage}
             />
-        </a>
-        <span className={styles.logoName}>Bummer</span>
 
-        <nav
+            <span className={styles.logoName}>Bummer</span>
+          </a>
+
+          <div className={styles.search}>
+            <SearchBar
+              value={searchTerm}
+              onChange={onSearchChange}
+            />
+          </div>
+
+          <nav
             className={styles.socialNavigation}
             aria-label="Links sociais"
-            >
+          >
             <a
-                className={styles.socialLink}
-                href="https://github.com/lucsdsm"
-                target="_blank"
-                rel="noopener noreferrer"
+              className={styles.socialLink}
+              href="https://github.com/lucsdsm"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub de Lucas Eduardo dos Santos"
+              title="GitHub"
             >
-                <SiGithub />
+              <SiGithub aria-hidden="true" />
             </a>
 
             <a
-                className={styles.socialLink}
-                href="https://www.instagram.com/"
-                target="_blank"
-                rel="noopener noreferrer"
+              className={styles.socialLink}
+              href="https://www.instagram.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              title="Instagram"
             >
-                <SiInstagram />
+              <SiInstagram aria-hidden="true" />
             </a>
 
             <a
-                className={styles.socialLink}
-                href="https://www.youtube.com/"
-                target="_blank"
-                rel="noopener noreferrer"
+              className={styles.socialLink}
+              href="https://www.youtube.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="YouTube"
+              title="YouTube"
             >
-                <SiYoutube />
+              <SiYoutube aria-hidden="true" />
             </a>
-        </nav>
+          </nav>
+        </div>
 
-        <nav className={styles.navigation} aria-label="Navegação do catálogo">
+        <nav
+          className={styles.navigation}
+          aria-label="Filtros do catálogo"
+        >
+          <span className={styles.filterLabel}>Explorar</span>
+
           <HeaderMenu
             label="Categorias"
             items={categories}
