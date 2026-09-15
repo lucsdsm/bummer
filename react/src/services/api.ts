@@ -19,7 +19,7 @@ async function getCatalogOptions(
 }
 
 /**
- * Obtém os itens publicados exibidos na grade principal.
+ * Obtém os posts publicados exibidos na grade principal.
  */
 export async function getItems({
   search = "",
@@ -41,7 +41,7 @@ export async function getItems({
   })
 
   if (!response.ok) {
-    throw new Error("Não foi possível carregar os itens.")
+    throw new Error("Não foi possível carregar os posts.")
   }
 
   return response.json() as Promise<Item[]>

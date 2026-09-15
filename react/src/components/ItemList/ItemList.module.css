@@ -18,9 +18,9 @@
   color: #f4f4f5;
   font-size: 2rem;
   font-weight: 750;
+  font-style: italic;
   letter-spacing: -0.04em;
   text-align: left;
-  font-style: italic;   
 }
 
 .grid {
@@ -29,24 +29,8 @@
   gap: 0.25rem;
 }
 
-.feedback {
-  width: 320px;
-  max-width: calc(100% - (var(--page-gutter) * 2));
-  margin: 0 auto;
-  padding: 3rem 0;
-  color: #b8b8b8;
-  font-size: 0.95rem;
-  line-height: 1.5;
-  text-align: center;
-}
-
-.error {
-  color: #ff9999;
-}
-
 @media (min-width: 680px) {
-  .catalog,
-  .feedback {
+  .catalog {
     width: 644px;
   }
 
@@ -56,8 +40,7 @@
 }
 
 @media (min-width: 1004px) {
-  .catalog,
-  .feedback {
+  .catalog {
     width: 968px;
   }
 

@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react"
 
 import { getItems } from "../../services/api"
+
 import type { Item } from "../../types/item"
 import { ItemCard } from "../ItemCard/ItemCard"
+import { EmptyState } from "../EmptyState/EmptyState"
+import { ErrorState } from "../ErrorState/ErrorState"
+import { LoadingState } from "../LoadingState/LoadingState"
+
 import styles from "./ItemList.module.css"
 
 interface ItemListProps {
@@ -10,7 +15,7 @@ interface ItemListProps {
 }
 
 /**
- * Busca e exibe itens publicados no catálogo.
+ * Busca e exibe posts publicados no catálogo.
  *
  * A lista é atualizada quando o termo de pesquisa é alterado.
  */
@@ -38,7 +43,7 @@ export function ItemList({ searchTerm }: ItemListProps) {
           return
         }
 
-        setError("Não foi possível carregar os itens. Tente novamente.")
+        setError("Não foi possível carregar os posts. Tente novamente.")
       } finally {
         setIsLoading(false)
       }
@@ -50,33 +55,30 @@ export function ItemList({ searchTerm }: ItemListProps) {
   }, [searchTerm])
 
   if (isLoading) {
-    return (
-      <p className={styles.feedback} role="status">
-        Carregando itens...
-      </p>
-    )
+    return <LoadingState />
   }
 
   if (error) {
-    return (
-      <p className={`${styles.feedback} ${styles.error}`} role="alert">
-        {error}
-      </p>
-    )
+    return <ErrorState message={error} />
   }
 
   if (items.length === 0) {
     return (
-      <p className={styles.feedback}>
-        Nenhum item encontrado.
-      </p>
+      <EmptyState
+        title="Nenhum item encontrado"
+        description={
+          searchTerm
+            ? `Não encontramos resultados para “${searchTerm}”.`
+            : "Ainda não há posts publicados no site."
+        }
+      />
     )
   }
 
   return (
-    <section className={styles.section} aria-label="Lista de itens">
+    <section className={styles.section} aria-label="Lista de posts">
       <div className={styles.catalog}>
-        <h2 className={styles.title}>Itens recentes</h2>
+        <h2 className={styles.title}>Posts recentes</h2>
 
         <div className={styles.grid}>
           {items.map((item) => (

@@ -8,10 +8,10 @@ interface SearchBarProps {
 }
 
 /**
- * Campo controlado para pesquisar itens no catálogo.
+ * Campo controlado para pesquisar posts no catálogo.
  *
  * O componente não executa requisições. Ele só comunica o termo ao pai,
- * que repassa o valor para a lista de itens.
+ * que repassa o valor para a lista de posts.
  */
 export function SearchBar({
   value,
@@ -22,7 +22,7 @@ export function SearchBar({
   }
 
   return (
-    <section className={styles.section} aria-label="Pesquisar itens">
+    <section className={styles.section} aria-label="Pesquisar posts">
       <div className={styles.field}>
         <svg
           className={styles.icon}
@@ -40,7 +40,7 @@ export function SearchBar({
         </svg>
 
         <label className={styles.visuallyHidden} htmlFor="item-search">
-          Pesquisar itens
+          Pesquisar posts
         </label>
 
         <input

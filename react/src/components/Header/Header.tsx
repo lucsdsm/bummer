@@ -64,7 +64,7 @@ function HeaderMenu({
 
           {!isLoading && !error && items.length === 0 && (
             <p className={styles.dropdownFeedback}>
-              Nenhum registro encontrado.
+              Nada registrado aqui ainda.
             </p>
           )}
 
@@ -119,7 +119,7 @@ export function Header({
           return
         }
 
-        setError("Não foi possível carregar o catálogo.")
+        setError("Não foi possível carregar os posts.")
       } finally {
         setIsLoading(false)
       }

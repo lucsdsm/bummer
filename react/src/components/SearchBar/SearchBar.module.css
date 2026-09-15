@@ -34,6 +34,7 @@
   background: transparent;
   color: #f4f4f5;
   font-size: 0.9rem;
+  letter-spacing: -0.045em;
 }
 
 .input::placeholder {
@@ -48,7 +49,8 @@
   background: transparent;
   color: #a7a7a7;
   cursor: pointer;
-  font-size: 0.75rem;
+  letter-spacing: -0.045em;
+  font-size: 0.85rem;
   font-weight: 650;
 }
 
@@ -70,4 +72,14 @@
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
   white-space: nowrap;
+}
+
+.input[type="search"] {
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.input[type="search"]::-webkit-search-cancel-button {
+  display: none;
+  -webkit-appearance: none;
 }
