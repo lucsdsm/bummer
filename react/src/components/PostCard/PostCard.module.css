@@ -8,9 +8,11 @@
     border-color 180ms ease,
     box-shadow 180ms ease,
     transform 180ms ease;
+  cursor: pointer;
 }
 
 .imageWrapper {
+  position: relative;
   overflow: hidden;
   aspect-ratio: 1;
   background-color: #1a1a1a;
@@ -20,7 +22,19 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  animation: image-enter 280ms ease;
   transition: transform 180ms ease;
+}
+
+.imageFallback {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  padding: 1rem;
+  color: #777;
+  font-size: 0.8rem;
+  text-align: center;
 }
 
 .content {
@@ -78,9 +92,64 @@
   transform: scale(1.035);
 }
 
+.imageDots {
+  position: absolute;
+  right: 0.65rem;
+  bottom: 0.65rem;
+  left: 0.65rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.35rem;
+  z-index: 1;
+}
+
+.imageDot {
+  width: 0.45rem;
+  height: 0.45rem;
+  padding: 0;
+  border: 1px solid rgb(255 255 255 / 45%);
+  border-radius: 50%;
+  background: rgb(0 0 0 / 28%);
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.imageDot:hover {
+  border-color: #ffffff;
+  background: rgb(255 255 255 / 78%);
+  transform: scale(1.15);
+}
+
+.imageDotActive {
+  border-color: #ffffff;
+  background: #ffffff;
+  transform: scale(1.15);
+}
+
+.imageDot:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .card,
   .image {
     transition: none;
+  }
+  .imageDot {
+    transition: none;
+  }
+}
+
+@keyframes image-enter {
+  from {
+    opacity: 0.3;
+  }
+
+  to {
+    opacity: 1;
   }
 }

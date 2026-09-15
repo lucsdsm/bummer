@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Game, Category, Post
+from .models import Game, Category, Post, Image
 
 class GameSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,9 +20,28 @@ class CategorySerializer(serializers.ModelSerializer):
             "slug",
         ]
 
+class ImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Image
+        fields = [
+            "id",
+            "image_url",
+            "position",
+        ]
+
 class PostListSerializer(serializers.ModelSerializer):
-    game = serializers.CharField(source="game.name", read_only=True)
-    category = serializers.CharField(source="category.name", read_only=True)
+    game = serializers.CharField(
+        source="game.name",
+        read_only=True,
+    )
+    category = serializers.CharField(
+        source="category.name",
+        read_only=True,
+    )
+    images = ImageSerializer(
+        many=True,
+        read_only=True,
+    )
 
     class Meta:
         model = Post
@@ -33,6 +52,6 @@ class PostListSerializer(serializers.ModelSerializer):
             "description",
             "game",
             "category",
-            "image_url",
             "download_url",
+            "images",
         ]

@@ -65,7 +65,7 @@
   width: 2rem;
   height: 2rem;
   place-items: center;
-  border-radius: 0.45rem;
+  border-radius: 0.25rem;
   color: #8d8d8d;
   text-decoration: none;
   transition:
@@ -98,7 +98,6 @@
   justify-content: center;
   gap: 0.4rem;
   min-height: 3rem;
-  border-bottom: 1px solid rgb(255 255 255 / 6%);
 }
 
 .filterLabel {
@@ -122,7 +121,7 @@
   min-height: 2rem;
   padding: 0.4rem 0.65rem;
   border: 1px solid transparent;
-  border-radius: 0.45rem;
+  border-radius: 0.25rem;
   background: transparent;
   color: #bdbdbd;
   cursor: pointer;
@@ -169,7 +168,7 @@
   max-width: min(18rem, calc(100vw - 2rem));
   max-height: 18rem;
   overflow-y: auto;
-  border-radius: 0.65rem;
+  border-radius: 0.25rem;
   background: #1a1a1a;
   box-shadow: 0 1rem 2rem rgb(0 0 0 / 34%);
 }

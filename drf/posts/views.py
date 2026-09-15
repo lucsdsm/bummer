@@ -38,5 +38,6 @@ class PostViewSet(viewsets.ReadOnlyModelViewSet):
         return (
             Post.objects.filter(is_published=True)
             .select_related("game", "category")
+            .prefetch_related("images")
             .order_by("-created_at")
         )

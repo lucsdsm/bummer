@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Category, Game, Post
+from .models import Category, Game, Post, Image
 
 
 @admin.register(Game)
@@ -34,6 +34,17 @@ class CategoryAdmin(admin.ModelAdmin):
         ),
     }
 
+class ImageInline(admin.TabularInline):
+    model = Image
+    extra = 1
+    fields = (
+        "image_url",
+        "position",
+    )
+    ordering = (
+        "position",
+        "id",
+    )
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
@@ -75,4 +86,7 @@ class PostAdmin(admin.ModelAdmin):
     )
     ordering = (
         "-created_at",
+    )
+    inlines = (
+        ImageInline,
     )

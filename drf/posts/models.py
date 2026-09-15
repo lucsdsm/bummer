@@ -92,11 +92,6 @@ class Post(models.Model):
         verbose_name="link para download",
         help_text="URL externa para download ou página de download do post.",
     )
-    image_url = models.URLField(
-        max_length=500,
-        verbose_name="link da imagem",
-        help_text="URL externa da imagem de exemplo/capa do post.",
-    )
 
     is_published = models.BooleanField(
         default=True,
@@ -129,3 +124,32 @@ class Post(models.Model):
 
     def __str__(self):
         return self.name
+
+class Image(models.Model):
+    post = models.ForeignKey(
+        Post,
+        on_delete=models.CASCADE,
+        related_name="images",
+        verbose_name="post",
+    )
+    image_url = models.URLField(
+        max_length=500,
+        verbose_name="link da imagem",
+        help_text="URL externa da imagem de exemplo do post.",
+    )
+    position = models.PositiveSmallIntegerField(
+        default=0,
+        verbose_name="posição",
+        help_text="Ordem da imagem na exibição.",
+    )
+
+    class Meta:
+        verbose_name = "imagem do post"
+        verbose_name_plural = "imagens do post"
+        ordering = [
+            "position",
+            "id",
+        ]
+
+    def __str__(self):
+        return f"Imagem {self.position + 1} — {self.post.name}"
