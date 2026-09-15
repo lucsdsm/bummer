@@ -53,8 +53,8 @@ services:
       context: ./react
       dockerfile: Dockerfile
     container_name: bummer_react
-    working_dir: /app
     restart: unless-stopped
+    working_dir: /app
     environment:
       VITE_API_URL: ${VITE_API_URL}
       CHOKIDAR_USEPOLLING: "true"
