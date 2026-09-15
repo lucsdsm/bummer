@@ -1,0 +1,178 @@
+.card {
+  position: relative;
+  overflow: hidden;
+  height: clamp(15rem, 24dvh, 18rem);
+  border-radius: 0.35rem;
+  background: rgb(20 24 20 / 90%);
+  box-shadow: 0 1.25rem 3rem rgb(0 0 0 / 24%);
+}
+.imageWrapper {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #131713;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.72;
+  transition:
+    opacity 220ms ease,
+    transform 500ms ease;
+}
+
+.card:hover .image {
+  opacity: 0.86;
+  transform: scale(1.03);
+}
+
+.imageOverlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgb(8 11 8 / 92%) 0%,
+      rgb(8 11 8 / 72%) 44%,
+      rgb(8 11 8 / 26%) 100%
+    ),
+    linear-gradient(
+      0deg,
+      rgb(8 11 8 / 70%) 0%,
+      transparent 56%
+    );
+}
+
+.imageFallback {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  color: #777;
+  font-size: 0.85rem;
+}
+
+.badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.25rem;
+  background: rgb(15 25 13 / 72%);
+  color: #77d85a;
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.badge svg {
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  height: 100%;
+  max-width: 38rem;
+  padding: 1.25rem;
+}
+
+.metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 0.55rem;
+  color: #b9c9b5;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.title {
+  max-width: 24ch;
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(1.6rem, 2.7vw, 2.65rem);
+  font-weight: 800;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+}
+
+.description {
+  display: -webkit-box;
+  max-width: 48ch;
+  margin: 0.8rem 0 0;
+  overflow: hidden;
+  color: #d0d6ce;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.25rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #8ee071;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 750;
+}
+
+.action:hover {
+  color: #b4ed9e;
+}
+
+.action:focus-visible {
+  outline: 2px solid #8ee071;
+  outline-offset: 4px;
+}
+
+.action svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+@media (max-width: 679px) {
+  .card,
+  .content {
+    min-height: 20rem;
+  }
+
+  .content {
+    padding: 1rem;
+  }
+
+  .badge {
+    top: 0.75rem;
+    left: 0.75rem;
+  }
+
+  .title {
+    max-width: 18ch;
+    font-size: 1.85rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image {
+    transition: none;
+  }
+}

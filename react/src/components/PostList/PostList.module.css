@@ -4,7 +4,7 @@
     var(--content-width)
   );
   margin: 0 auto;
-  padding: 2rem 0 3rem;
+  padding: 1.25rem 0 2rem;
 }
 
 .catalog {
@@ -14,12 +14,13 @@
 }
 
 .title {
-  margin: 0 0 1rem;
+  margin: 1.25rem 0 0.7rem;
   color: #f4f4f5;
-  font-size: 2rem;
+  font-size: 1.65rem;
   font-weight: 750;
   font-style: italic;
   letter-spacing: -0.04em;
+  line-height: 1.1;
   text-align: left;
 }
 
@@ -46,5 +47,23 @@
 
   .grid {
     grid-template-columns: repeat(3, minmax(0, 320px));
+  }
+}
+
+/*
+ * Desktop com altura comum ou menor.
+ *
+ * Reduz os cards para que destaque + título + primeira linha de posts
+ * tenham maior chance de permanecer na primeira dobra.
+ */
+@media (min-width: 1004px) and (max-height: 1080px) {
+  .section {
+    padding-top: 1rem;
+  }
+
+  .title {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
   }
 }

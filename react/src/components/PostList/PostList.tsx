@@ -4,6 +4,7 @@ import { getPosts } from "../../services/api"
 
 import type { Post } from "../../types/post"
 import { PostCard } from "../PostCard/PostCard"
+import { PostFeatured } from "../PostFeatured/PostFeatured"
 import { EmptyState } from "../EmptyState/EmptyState"
 import { ErrorState } from "../ErrorState/ErrorState"
 import { LoadingState } from "../LoadingState/LoadingState"
@@ -78,6 +79,9 @@ export function PostList({ searchTerm }: PostListProps) {
   return (
     <section className={styles.section} aria-label="Lista de posts">
       <div className={styles.catalog}>
+
+        <PostFeatured posts={posts} />
+
         <h2 className={styles.title}>Posts recentes</h2>
 
         <div className={styles.grid}>
