@@ -58,7 +58,7 @@ class Category(models.Model):
         return self.name
 
 
-class Item(models.Model):
+class Post(models.Model):
     name = models.CharField(
         max_length=180,
         verbose_name="nome",
@@ -77,25 +77,25 @@ class Item(models.Model):
     game = models.ForeignKey(
         Game,
         on_delete=models.PROTECT,
-        related_name="items",
+        related_name="posts",
         verbose_name="jogo",
     )
     category = models.ForeignKey(
         Category,
         on_delete=models.PROTECT,
-        related_name="items",
+        related_name="posts",
         verbose_name="categoria",
     )
 
     download_url = models.URLField(
         max_length=500,
         verbose_name="link para download",
-        help_text="URL externa para download ou página de download do item.",
+        help_text="URL externa para download ou página de download do post.",
     )
     image_url = models.URLField(
         max_length=500,
         verbose_name="link da imagem",
-        help_text="URL externa da imagem de exemplo/capa do item.",
+        help_text="URL externa da imagem de exemplo/capa do post.",
     )
 
     is_published = models.BooleanField(
@@ -112,8 +112,8 @@ class Item(models.Model):
     )
 
     class Meta:
-        verbose_name = "item"
-        verbose_name_plural = "itens"
+        verbose_name = "post"
+        verbose_name_plural = "posts"
         ordering = ["-created_at"]
         indexes = [
             models.Index(fields=["slug"]),

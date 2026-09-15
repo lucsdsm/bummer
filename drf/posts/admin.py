@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Category, Game, Item
+from .models import Category, Game, Post
 
 
 @admin.register(Game)
@@ -35,8 +35,8 @@ class CategoryAdmin(admin.ModelAdmin):
     }
 
 
-@admin.register(Item)
-class ModAdmin(admin.ModelAdmin):
+@admin.register(Post)
+class PostAdmin(admin.ModelAdmin):
     list_display = (
         "name",
         "game",

@@ -18,7 +18,7 @@ bummer/
 │   ├── Dockerfile
 │   ├── manage.py
 │   ├── config/
-│   └── items/
+│   └── posts/
 └── react/
     ├── Dockerfile
     ├── package.json
@@ -122,9 +122,9 @@ No Django Admin, cadastre os dados nesta ordem:
 
 1. **Jogos** — por exemplo, `Grand Theft Auto: San Andreas`.
 2. **Categorias** — por exemplo, `Veículos`, `Armas`, `Skins`, `Mapas` e `Scripts`.
-3. **Itens** — o mod/item em si, associado a um jogo e uma categoria.
+3. **Posts** — o post em si, associado a um jogo e uma categoria.
 
-Cada item possui:
+Cada post possui:
 
 - Nome
 - Slug
@@ -143,9 +143,9 @@ Com os serviços rodando, os endpoints principais são:
 
 | Endpoint | Descrição |
 |---|---|
-| `GET /api/items/` | Lista itens publicados |
-| `GET /api/items/?search=<termo>` | Pesquisa por nome, descrição, jogo ou categoria |
-| `GET /api/items/<slug>/` | Exibe os detalhes de um item |
+| `GET /api/posts/` | Lista itens publicados |
+| `GET /api/posts/?search=<termo>` | Pesquisa por nome, descrição, jogo ou categoria |
+| `GET /api/posts/<slug>/` | Exibe os detalhes de um post |
 | `GET /api/games/` | Lista jogos cadastrados |
 | `GET /api/categories/` | Lista categorias cadastradas |
 | `/admin/` | Painel administrativo do Django |
@@ -153,8 +153,8 @@ Com os serviços rodando, os endpoints principais são:
 Exemplos:
 
 ```text
-http://localhost:8000/api/items/
-http://localhost:8000/api/items/?search=veiculo
+http://localhost:8000/api/posts/
+http://localhost:8000/api/posts/?search=veiculo
 http://localhost:8000/api/games/
 http://localhost:8000/api/categories/
 ```
@@ -197,7 +197,7 @@ Exemplos:
 
 ```bash
 docker compose exec drf python manage.py makemigrations
-docker compose exec drf python manage.py makemigrations items
+docker compose exec drf python manage.py makemigrations posts
 docker compose exec drf python manage.py migrate
 docker compose exec drf python manage.py showmigrations
 docker compose exec drf python manage.py createsuperuser

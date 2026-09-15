@@ -89,7 +89,7 @@ function HeaderMenu({
  * Cabeçalho principal do Bummer.
  *
  * O termo de busca pertence ao App porque é compartilhado entre SearchBar
- * e ItemList. O Header apenas recebe e atualiza esse valor por props.
+ * e PostList. O Header apenas recebe e atualiza esse valor por props.
  */
 export function Header({
   searchTerm,
@@ -119,7 +119,7 @@ export function Header({
           return
         }
 
-        setError("Não foi possível carregar os posts.")
+        setError("Não foi possível carregar os dados.")
       } finally {
         setIsLoading(false)
       }

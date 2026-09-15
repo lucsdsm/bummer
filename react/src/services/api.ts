@@ -1,5 +1,5 @@
 import type { CatalogOption } from "../types/catalog"
-import type { Item } from "../types/item"
+import type { Post } from "../types/post"
 
 const apiUrl = import.meta.env.VITE_API_URL ?? "http://localhost:8000/api"
 
@@ -21,10 +21,10 @@ async function getCatalogOptions(
 /**
  * Obtém os posts publicados exibidos na grade principal.
  */
-export async function getItems({
+export async function getPosts({
   search = "",
   signal,
-}: GetItemsParams = {}): Promise<Item[]> {
+}: GetPostsParams = {}): Promise<Post[]> {
   const params = new URLSearchParams()
 
   if (search.trim()) {
@@ -33,8 +33,8 @@ export async function getItems({
 
   const queryString = params.toString()
   const url = queryString
-    ? `${apiUrl}/items/?${queryString}`
-    : `${apiUrl}/items/`
+    ? `${apiUrl}/posts/?${queryString}`
+    : `${apiUrl}/posts/`
 
   const response = await fetch(url, {
     signal,
@@ -44,7 +44,7 @@ export async function getItems({
     throw new Error("Não foi possível carregar os posts.")
   }
 
-  return response.json() as Promise<Item[]>
+  return response.json() as Promise<Post[]>
 }
 
 /**

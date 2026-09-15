@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react"
 
-import { getItems } from "../../services/api"
+import { getPosts } from "../../services/api"
 
-import type { Item } from "../../types/item"
-import { ItemCard } from "../ItemCard/ItemCard"
+import type { Post } from "../../types/post"
+import { PostCard } from "../PostCard/PostCard"
 import { EmptyState } from "../EmptyState/EmptyState"
 import { ErrorState } from "../ErrorState/ErrorState"
 import { LoadingState } from "../LoadingState/LoadingState"
 
-import styles from "./ItemList.module.css"
+import styles from "./PostList.module.css"
 
-interface ItemListProps {
+interface PostListProps {
   searchTerm: string
 }
 
@@ -19,25 +19,25 @@ interface ItemListProps {
  *
  * A lista é atualizada quando o termo de pesquisa é alterado.
  */
-export function ItemList({ searchTerm }: ItemListProps) {
-  const [items, setItems] = useState<Item[]>([])
+export function PostList({ searchTerm }: PostListProps) {
+  const [posts, setPosts] = useState<Post[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const controller = new AbortController()
 
-    async function loadItems() {
+    async function loadPosts() {
       try {
         setIsLoading(true)
         setError(null)
 
-        const data = await getItems({
+        const data = await getPosts({
           search: searchTerm,
           signal: controller.signal,
         })
 
-        setItems(data)
+        setPosts(data)
       } catch (error) {
         if (error instanceof Error && error.name === "AbortError") {
           return
@@ -49,7 +49,7 @@ export function ItemList({ searchTerm }: ItemListProps) {
       }
     }
 
-    void loadItems()
+    void loadPosts()
 
     return () => controller.abort()
   }, [searchTerm])
@@ -62,10 +62,10 @@ export function ItemList({ searchTerm }: ItemListProps) {
     return <ErrorState message={error} />
   }
 
-  if (items.length === 0) {
+  if (posts.length === 0) {
     return (
       <EmptyState
-        title="Nenhum item encontrado"
+        title="Nenhum post encontrado."
         description={
           searchTerm
             ? `Não encontramos resultados para “${searchTerm}”.`
@@ -81,8 +81,8 @@ export function ItemList({ searchTerm }: ItemListProps) {
         <h2 className={styles.title}>Posts recentes</h2>
 
         <div className={styles.grid}>
-          {items.map((item) => (
-            <ItemCard key={item.id} item={item} />
+          {posts.map((post) => (
+            <PostCard key={post.id} post={post} />
           ))}
         </div>
       </div>

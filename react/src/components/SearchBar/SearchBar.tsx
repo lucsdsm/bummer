@@ -39,12 +39,12 @@ export function SearchBar({
           />
         </svg>
 
-        <label className={styles.visuallyHidden} htmlFor="item-search">
+        <label className={styles.visuallyHidden} htmlFor="post-search">
           Pesquisar posts
         </label>
 
         <input
-          id="item-search"
+          id="post-search"
           className={styles.input}
           type="search"
           value={value}

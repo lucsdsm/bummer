@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 import { Header } from "./components/Header/Header"
-import { ItemList } from "./components/ItemList/ItemList"
+import { PostList } from "./components/PostList/PostList"
 
 export default function App() {
   const [searchTerm, setSearchTerm] = useState("")
@@ -14,7 +14,7 @@ export default function App() {
       />
 
       <main>
-        <ItemList searchTerm={searchTerm} />
+        <PostList searchTerm={searchTerm} />
       </main>
     </>
   )

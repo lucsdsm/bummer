@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Game, Category, Item
+from .models import Game, Category, Post
 
 class GameSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,12 +20,12 @@ class CategorySerializer(serializers.ModelSerializer):
             "slug",
         ]
 
-class ItemListSerializer(serializers.ModelSerializer):
+class PostListSerializer(serializers.ModelSerializer):
     game = serializers.CharField(source="game.name", read_only=True)
     category = serializers.CharField(source="category.name", read_only=True)
 
     class Meta:
-        model = Item
+        model = Post
         fields = [
             "id",
             "name",

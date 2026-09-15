@@ -1,10 +1,10 @@
 from rest_framework import filters, viewsets
 
-from .models import Category, Game, Item
+from .models import Category, Game, Post
 from .serializers import (
     CategorySerializer,
     GameSerializer,
-    ItemListSerializer,
+    PostListSerializer,
 )
 
 
@@ -20,8 +20,8 @@ class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
     lookup_field = "slug"
 
 
-class ItemViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = ItemListSerializer
+class PostViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = PostListSerializer
     lookup_field = "slug"
 
     filter_backends = [
@@ -36,7 +36,7 @@ class ItemViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         return (
-            Item.objects.filter(is_published=True)
+            Post.objects.filter(is_published=True)
             .select_related("game", "category")
             .order_by("-created_at")
         )
