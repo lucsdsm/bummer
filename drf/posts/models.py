@@ -42,19 +42,62 @@ class Category(models.Model):
         blank=True,
         verbose_name="slug",
     )
+    parent = models.ForeignKey(
+        "self",
+        on_delete=models.PROTECT,
+        related_name="children",
+        null=True,
+        blank=True,
+        verbose_name="categoria principal",
+        help_text=(
+            "Deixe vazio para uma categoria principal. "
+            "Selecione uma categoria para criar uma subcategoria."
+        ),
+    )
 
     class Meta:
         verbose_name = "categoria"
         verbose_name_plural = "categorias"
-        ordering = ["name"]
+        ordering = [
+            "parent__name",
+            "name",
+        ]
+
+    def clean(self):
+        from django.core.exceptions import ValidationError
+
+        if self.pk and self.parent_id == self.pk:
+            raise ValidationError(
+                {
+                    "parent": "Uma categoria não pode ser pai dela mesma.",
+                }
+            )
+
+        ancestor = self.parent
+
+        while ancestor:
+            if self.pk and ancestor.pk == self.pk:
+                raise ValidationError(
+                    {
+                        "parent": (
+                            "Essa seleção criaria um ciclo entre categorias."
+                        ),
+                    }
+                )
+
+            ancestor = ancestor.parent
 
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
 
+        self.full_clean()
         super().save(*args, **kwargs)
 
     def __str__(self):
+        if self.parent_id:
+            return f"{self.parent.name} → {self.name}"
+
         return self.name
 
 
@@ -77,6 +120,8 @@ class Post(models.Model):
     game = models.ForeignKey(
         Game,
         on_delete=models.PROTECT,
+        blank=True,
+        null=True,
         related_name="posts",
         verbose_name="jogo",
     )

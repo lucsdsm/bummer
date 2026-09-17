@@ -23,17 +23,24 @@ class GameAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     list_display = (
         "name",
+        "parent",
         "slug",
+    )
+    list_filter = (
+        "parent",
     )
     search_fields = (
         "name",
+        "parent__name",
+    )
+    autocomplete_fields = (
+        "parent",
     )
     prepopulated_fields = {
         "slug": (
             "name",
         ),
     }
-
 class ImageInline(admin.TabularInline):
     model = Image
     extra = 1

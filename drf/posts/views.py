@@ -8,17 +8,19 @@ from .serializers import (
 )
 
 
+class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = (
+        Category.objects.filter(parent__isnull=True)
+        .prefetch_related("children")
+        .order_by("name")
+    )
+    serializer_class = CategorySerializer
+    lookup_field = "slug"
+
 class GameViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Game.objects.all().order_by("name")
     serializer_class = GameSerializer
     lookup_field = "slug"
-
-
-class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Category.objects.all().order_by("name")
-    serializer_class = CategorySerializer
-    lookup_field = "slug"
-
 
 class PostViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = PostListSerializer

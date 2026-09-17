@@ -123,6 +123,7 @@ No Django Admin, cadastre os dados nesta ordem:
 1. **Jogos** — por exemplo, `Grand Theft Auto: San Andreas`.
 2. **Categorias** — por exemplo, `Veículos`, `Armas`, `Skins`, `Mapas` e `Scripts`.
 3. **Posts** — o post em si, associado a um jogo e uma categoria.
+4. **Imagens** - cada post pode ter nenhuma ou várias imagens associadas.
 
 Cada post possui:
 
@@ -134,6 +135,7 @@ Cada post possui:
 - Link externo de download
 - Link externo da imagem de exemplo
 - Estado de publicação
+- Imagens
 
 Itens desmarcados como `publicado` não aparecem na API pública nem na listagem React.
 

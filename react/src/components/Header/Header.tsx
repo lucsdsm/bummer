@@ -7,7 +7,7 @@ import {
 
 import { SearchBar } from "../SearchBar/SearchBar"
 import { getCategories, getGames } from "../../services/api"
-import type { CatalogOption } from "../../types/catalog"
+import type { CatalogOption, CategoryOption } from "../../types/catalog"
 import styles from "./Header.module.css"
 
 type MenuName = "categories" | "games" | null
@@ -19,7 +19,7 @@ interface HeaderProps {
 
 interface HeaderMenuProps {
   label: string
-  items: CatalogOption[]
+  items: Array<CatalogOption | CategoryOption>
   isOpen: boolean
   isLoading: boolean
   error: string | null
@@ -29,6 +29,12 @@ interface HeaderMenuProps {
 /**
  * Exibe um dropdown com opções cadastradas no catálogo.
  */
+function hasChildren(
+  item: CatalogOption | CategoryOption,
+): item is CategoryOption {
+  return "children" in item && item.children.length > 0
+}
+
 function HeaderMenu({
   label,
   items,
@@ -71,13 +77,28 @@ function HeaderMenu({
           {!isLoading &&
             !error &&
             items.map((item) => (
-              <button
-                key={item.id}
-                type="button"
-                className={styles.dropdownItem}
-              >
-                {item.name}
-              </button>
+              <div key={item.id} className={styles.dropdownGroup}>
+                <button
+                  type="button"
+                  className={styles.dropdownItem}
+                >
+                  {item.name}
+                </button>
+
+                {hasChildren(item) && (
+                  <div className={styles.submenu}>
+                    {item.children.map((child) => (
+                      <button
+                        key={child.id}
+                        type="button"
+                        className={styles.submenuItem}
+                      >
+                        {child.name}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
         </div>
       )}
@@ -95,7 +116,7 @@ export function Header({
   searchTerm,
   onSearchChange,
 }: HeaderProps) {
-  const [categories, setCategories] = useState<CatalogOption[]>([])
+  const [categories, setCategories] = useState<CategoryOption[]>([])
   const [games, setGames] = useState<CatalogOption[]>([])
   const [openMenu, setOpenMenu] = useState<MenuName>(null)
   const [isLoading, setIsLoading] = useState(true)
