@@ -23,7 +23,9 @@ interface HeaderMenuProps {
   isOpen: boolean
   isLoading: boolean
   error: string | null
+  selectedSlug: string | null
   onClick: () => void
+  onSelect: (slug: string | null) => void
 }
 
 /**
@@ -41,8 +43,14 @@ function HeaderMenu({
   isOpen,
   isLoading,
   error,
+  selectedSlug,
   onClick,
+  onSelect,
 }: HeaderMenuProps) {
+  function handleSelect(slug: string | null) {
+    onSelect(slug)
+  }
+
   return (
     <div className={styles.menu}>
       <button
@@ -74,13 +82,30 @@ function HeaderMenu({
             </p>
           )}
 
+          {!isLoading && !error && items.length > 0 && (
+            <button
+              type="button"
+              className={`${styles.dropdownItem} ${
+                selectedSlug === null ? styles.dropdownItemActive : ""
+              }`}
+              onClick={() => handleSelect(null)}
+            >
+              All
+            </button>
+          )}
+
           {!isLoading &&
             !error &&
             items.map((item) => (
               <div key={item.id} className={styles.dropdownGroup}>
                 <button
                   type="button"
-                  className={styles.dropdownItem}
+                  className={`${styles.dropdownItem} ${
+                    selectedSlug === item.slug
+                      ? styles.dropdownItemActive
+                      : ""
+                  }`}
+                  onClick={() => handleSelect(item.slug)}
                 >
                   {item.name}
                 </button>
@@ -91,7 +116,12 @@ function HeaderMenu({
                       <button
                         key={child.id}
                         type="button"
-                        className={styles.submenuItem}
+                        className={`${styles.submenuItem} ${
+                          selectedSlug === child.slug
+                            ? styles.submenuItemActive
+                            : ""
+                        }`}
+                        onClick={() => handleSelect(child.slug)}
                       >
                         {child.name}
                       </button>
@@ -115,6 +145,10 @@ function HeaderMenu({
 export function Header({
   searchTerm,
   onSearchChange,
+  selectedCategorySlug,
+  selectedGameSlug,
+  onCategorySelect,
+  onGameSelect,
 }: HeaderProps) {
   const [categories, setCategories] = useState<CategoryOption[]>([])
   const [games, setGames] = useState<CatalogOption[]>([])
@@ -180,6 +214,16 @@ export function Header({
     setOpenMenu((currentMenu) => (
       currentMenu === menu ? null : menu
     ))
+  }
+
+  function handleCategorySelect(slug: string | null) {
+    onCategorySelect(slug)
+    setOpenMenu(null)
+  }
+
+  function handleGameSelect(slug: string | null) {
+    onGameSelect(slug)
+    setOpenMenu(null)
   }
 
   return (
@@ -258,7 +302,9 @@ export function Header({
             isOpen={openMenu === "categories"}
             isLoading={isLoading}
             error={error}
+            selectedSlug={selectedCategorySlug}
             onClick={() => toggleMenu("categories")}
+            onSelect={handleCategorySelect}
           />
 
           <HeaderMenu
@@ -267,7 +313,9 @@ export function Header({
             isOpen={openMenu === "games"}
             isLoading={isLoading}
             error={error}
+            selectedSlug={selectedGameSlug}
             onClick={() => toggleMenu("games")}
+            onSelect={handleGameSelect}
           />
         </nav>
       </div>

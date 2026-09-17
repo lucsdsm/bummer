@@ -62,6 +62,10 @@
   white-space: nowrap;
 }
 
+.metadataSeparator {
+  margin: 0rem 0rem 0rem 0.5rem;
+}
+
 .title {
   overflow: hidden;
   color: #f4f4f5;

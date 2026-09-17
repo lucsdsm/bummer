@@ -178,6 +178,11 @@
   text-align: left;
 }
 
+.dropdownItemActive {
+  background: rgb(58 160 27 / 16%);
+  color: #ffffff;
+}
+
 .dropdownItem::before {
   margin-right: 0.10rem;
   content: "/";
@@ -232,6 +237,11 @@
   text-transform: uppercase;
   font-style: italic; 
   text-align: left;
+}
+
+.submenuItemActive {
+  background: rgb(58 160 27 / 12%);
+  color: #ffffff;
 }
 
 .submenuItem::before {

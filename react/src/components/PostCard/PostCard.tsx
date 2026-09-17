@@ -148,12 +148,24 @@ export function PostCard({ post }: PostCardProps) {
 
       <div className={styles.content}>
         <p className={styles.metadata}>
-          {post.category}
+          /{post.category}
+
+          {post.subcategory && (
+            <>
+              <span className={styles.metadataSeparator} aria-hidden="true">
+                @
+              </span>
+
+              <span>{post.subcategory}</span>
+            </>
+          )}
         </p>
 
-        <p className={styles.metadata}>
-          {post.game}
-        </p>
+        {post.game && (
+          <p className={styles.metadata}>
+            {post.game}
+          </p>
+        )}
 
         <h2 className={styles.title}>{post.name}</h2>
 

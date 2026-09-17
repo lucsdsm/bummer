@@ -13,6 +13,8 @@ import styles from "./PostList.module.css"
 
 interface PostListProps {
   searchTerm: string
+  categorySlug: string | null
+  gameSlug: string | null
 }
 
 /**
@@ -20,7 +22,11 @@ interface PostListProps {
  *
  * A lista é atualizada quando o termo de pesquisa é alterado.
  */
-export function PostList({ searchTerm }: PostListProps) {
+export function PostList({
+  searchTerm,
+  categorySlug,
+  gameSlug,
+}: PostListProps) {
   const [posts, setPosts] = useState<Post[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -35,6 +41,8 @@ export function PostList({ searchTerm }: PostListProps) {
 
         const data = await getPosts({
           search: searchTerm,
+          category: categorySlug,
+          game: gameSlug,
           signal: controller.signal,
         })
 
@@ -53,7 +61,11 @@ export function PostList({ searchTerm }: PostListProps) {
     void loadPosts()
 
     return () => controller.abort()
-  }, [searchTerm])
+  }, [
+    searchTerm,
+    categorySlug,
+    gameSlug,
+  ])
 
   if (isLoading) {
     return <LoadingState />
@@ -70,7 +82,7 @@ export function PostList({ searchTerm }: PostListProps) {
         description={
           searchTerm
             ? `Não encontramos resultados para “${searchTerm}”.`
-            : "Ainda não há posts publicados no site."
+            : "Não há nada por aqui ainda."
         }
       />
     )

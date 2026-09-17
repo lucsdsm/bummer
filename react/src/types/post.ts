@@ -3,8 +3,9 @@ export interface Post {
   name: string
   slug: string
   description: string
-  game: string
+  game: string | null
   category: string
+  subcategory: string | null
   download_url: string
   images: Image[]
 }

@@ -46,14 +46,9 @@ class ImageSerializer(serializers.ModelSerializer):
         ]
 
 class PostListSerializer(serializers.ModelSerializer):
-    game = serializers.CharField(
-        source="game.name",
-        read_only=True,
-    )
-    category = serializers.CharField(
-        source="category.name",
-        read_only=True,
-    )
+    game = serializers.SerializerMethodField()
+    category = serializers.SerializerMethodField()
+    subcategory = serializers.SerializerMethodField()
     images = ImageSerializer(
         many=True,
         read_only=True,
@@ -68,6 +63,25 @@ class PostListSerializer(serializers.ModelSerializer):
             "description",
             "game",
             "category",
+            "subcategory",
             "download_url",
             "images",
         ]
+    
+    def get_game(self, post):
+        if not post.game:
+            return None
+
+        return post.game.name
+
+    def get_category(self, post):
+        if post.category.parent:
+            return post.category.parent.name
+
+        return post.category.name
+
+    def get_subcategory(self, post):
+        if not post.category.parent:
+            return None
+
+        return post.category.name
