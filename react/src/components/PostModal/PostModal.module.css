@@ -1,0 +1,266 @@
+.overlay {
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    display: grid;
+    overflow-y: auto;
+    place-items: center;
+    padding: 1rem;
+    background: rgb(0 0 0 / 78%);
+    backdrop-filter: blur(0.25rem);
+    animation: overlay-enter 180ms ease;
+}
+
+.modal {
+    position: relative;
+    display: grid;
+    overflow: hidden;
+    width: min(100%, 72rem);
+    max-height: min(72rem, calc(100vh - 2rem));
+    grid-template-columns: minmax(0, 1fr);
+    border-radius: 0.25rem;
+    background: #181818;
+    animation: modal-enter 180ms ease;
+}
+
+.gallery {
+    position: relative;
+    overflow: hidden;
+    min-height: 15rem;
+    aspect-ratio: 16 / 9;
+    background: #111;
+}
+
+.image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    animation: image-enter 220ms ease;
+}
+
+.imageFallback {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    place-items: center;
+    padding: 1rem;
+    color: #777;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.imageDot {
+    border: 0;
+    cursor: pointer;
+}
+
+.imageDots {
+    position: absolute;
+    z-index: 2;
+    right: 1rem;
+    bottom: 0.9rem;
+    left: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+.imageDot {
+    width: 0.48rem;
+    height: 0.48rem;
+    padding: 0;
+    border: 1px solid rgb(255 255 255 / 18%);
+    border-radius: 50%;
+    background: rgb(0 0 0 / 42%);
+    transition:
+        background-color 160ms ease,
+        transform 160ms ease;
+}
+
+.imageDot:hover,
+.imageDotActive {
+    background: #ffffff;
+    transform: scale(1.18);
+}
+
+.content {
+    display: grid;
+    overflow-y: auto;
+    gap: 0.5rem;
+    padding: 5rem;
+}
+
+.metadata {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.1rem;
+    margin: 0;
+    color: #8f8f8f;
+    font-size: 0.72rem;
+    font-weight: 750;
+    letter-spacing: -0.03em;
+    line-height: 1.35;
+    text-transform: uppercase;
+}
+
+.title {
+    margin: -0.4rem 0 0;
+    color: #f4f4f5;
+    font-size: clamp(1.35rem, 3vw, 2rem);
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    line-height: 1.1;
+    font-style: italic;
+}
+
+.description {
+    margin: 0;
+    color: #c2c2c2;
+    font-size: 0.92rem;
+    line-height: 1.65;
+    white-space: pre-line;
+}
+
+.details {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem;
+    margin: 0;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin: 0;
+}
+
+.detail dt {
+    color: #777;
+    font-size: 1rem;
+    font-weight: 750;
+    text-transform: uppercase;
+    font-style: italic;
+}
+
+.detail dd {
+    margin: 0;
+    color: #d6d6d6;
+    font-size: 0.8rem;
+    line-height: 1.35;
+    font-weight: 650;
+    text-transform: uppercase;
+}
+
+.downloadButton {
+    display: inline-flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+    min-height: 2.75rem;
+    border-radius: 0.25rem;
+    background: #53b72f;
+    color: #ffffff;
+    font-size: 0.83rem;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition:
+        background-color 160ms ease,
+        transform 160ms ease;
+}
+
+.downloadButton:hover {
+    background: #68ca42;
+    transform: translateY(-0.1rem);
+}
+
+.closeButton:focus-visible,
+.carouselButton:focus-visible,
+.imageDot:focus-visible,
+.downloadButton:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 3px;
+}
+
+@media (min-width: 50rem) {
+    .modal {
+        grid-template-columns: minmax(0, 1.12fr) minmax(19rem, 0.88fr);
+    }
+
+    .gallery {
+        min-height: 100%;
+        aspect-ratio: auto;
+    }
+
+    .content {
+        max-height: min(52rem, calc(100vh - 2rem));
+    }
+}
+
+@media (max-width: 34rem) {
+    .overlay {
+        padding: 0;
+    }
+
+    .modal {
+        width: 100%;
+        min-height: 100%;
+        max-height: none;
+        border: 0;
+        border-radius: 0;
+    }
+
+    .details {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .overlay,
+    .modal,
+    .image,
+    .closeButton,
+    .carouselButton,
+    .imageDot,
+    .downloadButton {
+        animation: none;
+        transition: none;
+    }
+}
+
+@keyframes overlay-enter {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes modal-enter {
+    from {
+        opacity: 0;
+        transform: translateY(0.5rem) scale(0.985);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes image-enter {
+    from {
+        opacity: 0.35;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

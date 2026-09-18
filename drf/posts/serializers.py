@@ -66,6 +66,8 @@ class PostListSerializer(serializers.ModelSerializer):
             "subcategory",
             "download_url",
             "images",
+            "created_at",
+            "updated_at",
         ]
     
     def get_game(self, post):

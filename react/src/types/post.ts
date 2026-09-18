@@ -8,6 +8,8 @@ export interface Post {
   subcategory: string | null
   download_url: string
   images: Image[]
+  created_at: string
+  updated_at: string
 }
 
 export interface Image {

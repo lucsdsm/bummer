@@ -5,6 +5,7 @@ import styles from "./PostCard.module.css"
 
 interface PostCardProps {
   post: Post
+  onClick?: () => void
 }
 
 const IMAGE_ROTATION_INTERVAL = 5000
@@ -20,9 +21,6 @@ function getInitialDelay(): number {
 
 /**
  * Retorna o próximo índice de forma circular.
- *
- * Exemplo com três imagens:
- * 0 -> 1 -> 2 -> 0
  */
 function getNextImageIndex(
   currentIndex: number,
@@ -56,14 +54,18 @@ function ImageDots({
     >
       {Array.from({ length: imageCount }, (_, index) => (
         <button
-          key={index}
           type="button"
           className={`${styles.imageDot} ${
-            index === activeIndex ? styles.imageDotActive : ""
+            index === activeIndex
+              ? styles.imageDotActive
+              : ""
           }`}
-          aria-label={`Exibir imagem ${index + 1} de ${imageCount}`}
-          aria-current={index === activeIndex ? "true" : undefined}
-          onClick={() => onSelect(index)}
+          aria-label={`Mostrar imagem ${index + 1}`}
+          aria-pressed={index === activeIndex}
+          onClick={(event) => {
+            event.stopPropagation()
+            onSelect(index)
+          }}
         />
       ))}
     </div>
@@ -76,7 +78,7 @@ function ImageDots({
  * Quando existem várias imagens, a miniatura avança automaticamente em
  * sequência e também pode ser alterada pelos dots.
  */
-export function PostCard({ post }: PostCardProps) {
+export function PostCard({ post, onClick }: PostCardProps) {
   const imageCount = post.images.length
   const [imageIndex, setImageIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
@@ -117,7 +119,19 @@ export function PostCard({ post }: PostCardProps) {
   const currentImage = post.images[imageIndex]
 
   return (
-    <article className={styles.card}>
+    <article
+      className={styles.card}
+      role="button"
+      tabIndex={0}
+      aria-label={`Abrir detalhes de ${post.name}`}
+      onClick={onClick}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault()
+          onClick()
+        }
+      }}
+    >
       <div
         className={styles.imageWrapper}
         onMouseEnter={() => setIsPaused(true)}

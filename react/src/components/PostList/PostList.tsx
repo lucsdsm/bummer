@@ -5,6 +5,7 @@ import { getPosts } from "../../services/api"
 import type { Post } from "../../types/post"
 import { PostCard } from "../PostCard/PostCard"
 import { PostFeatured } from "../PostFeatured/PostFeatured"
+import { PostModal }  from "../PostModal/PostModal"
 import { EmptyState } from "../EmptyState/EmptyState"
 import { ErrorState } from "../ErrorState/ErrorState"
 import { LoadingState } from "../LoadingState/LoadingState"
@@ -28,6 +29,7 @@ export function PostList({
   gameSlug,
 }: PostListProps) {
   const [posts, setPosts] = useState<Post[]>([])
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -98,10 +100,18 @@ export function PostList({
 
         <div className={styles.grid}>
           {posts.map((post) => (
-            <PostCard key={post.id} post={post} />
+            <PostCard key={post.id} post={post} onClick={() => setSelectedPost(post)} />
           ))}
         </div>
+
+        {selectedPost && (
+          <PostModal
+            post={selectedPost}
+            onClose={() => setSelectedPost(null)}
+          />
+        )}
       </div>
     </section>
+    
   )
 }

@@ -64,7 +64,7 @@ export function PostFeatured({ posts }: PostFeaturedProps) {
       <div className={styles.content}>
         <div className={styles.metadata}>
           <span>{PostFeatured.category}</span>
-          <span aria-hidden="true">•</span>
+          <span aria-hidden="true">|</span>
           <span>{PostFeatured.game}</span>
         </div>
 
