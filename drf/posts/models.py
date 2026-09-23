@@ -142,6 +142,7 @@ class Post(models.Model):
         default=True,
         verbose_name="publicado",
     )
+
     created_at = models.DateTimeField(
         auto_now_add=True,
         verbose_name="criado em",

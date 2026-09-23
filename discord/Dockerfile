@@ -17,6 +17,9 @@ COPY requirements.txt /tmp/requirements.txt
 RUN pip install --upgrade pip \
     && pip install -r /tmp/requirements.txt
 
-COPY drf /app
+COPY drf /app/drf
+COPY discord /app/discord
 
-EXPOSE 8000
+WORKDIR /app/drf
+
+CMD ["python", "../discord/bot.py"]
